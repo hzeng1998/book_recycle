@@ -129,7 +129,7 @@ class PublishOrder extends React.Component {
           </Grid>
           <DetailOrder data={{...this.state}}/>
         </Grid>
-        <ErrorMessage handleSuccess={getMyOrders}/>
+        <ErrorMessage/>
       </React.Fragment>
     );
   }

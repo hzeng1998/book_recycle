@@ -70,7 +70,7 @@ const fetchUserProfile = () => ({
 
 export const getUserProfile = (() => (dispatch, getState) => {
   console.log(getState().profile);
-  if (getState().profile.isFetching || getState().profile.email)
+  if (getState().profile.isFetching || getState().profile.email || !window.localStorage.getItem('token'))
     return null;
   return dispatch(fetchUserProfile());
 });
@@ -92,7 +92,7 @@ const fetchUserInfo = (email) => ({
 });
 
 export const getUserInfo = ((email) => (dispatch, getState) => {
-  if (getState().user.isFetching || getState().user[email])
+  if (getState().user.isFetching || getState().user[email] || !email)
     return null;
   return dispatch(fetchUserInfo(email));
 });

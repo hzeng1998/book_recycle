@@ -72,7 +72,7 @@ class Trade extends React.Component {
 
   render() {
     let {classes, trades} = this.props;
-    trades.data.sort((a,b) => a.status - b.status);
+    trades.data.sort((a, b) => (a.status - b.status) === 0 ? (b.id - a.id) : (a.status - b.status));
     return (
       <React.Fragment>
         <Grid container justify={"space-around"} direction={"row"} className={classes.root}>

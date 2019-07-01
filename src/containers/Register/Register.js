@@ -21,10 +21,12 @@ const styles = theme => ({
     height: "100%",
     backgroundImage: 'url("/images/0201.png")',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    overflow: 'hidden'
   },
   paper: {
     padding: theme.spacing.unit * 2,
+    minWidth: '500px'
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -76,6 +78,7 @@ class Register extends React.Component {
 
   handleSubmit = (event) => {
 
+    event.preventDefault();
     if (this.state.name
       && this.state.password
       && this.state.checkPassword
@@ -88,12 +91,12 @@ class Register extends React.Component {
         this.props.setErrorMessage("The Repetitive password is Not Match");
         return;
       }
-      if (this.state.name.length >= 6 && this.state.name.length < 45) {
+      if (!(this.state.name.length >= 6 && this.state.name.length < 45)) {
         this.props.setErrorMessage("The name length should between 6 and 45");
         return;
       }
-      if (this.state.password.length >= 6 && this.state.name.length < 60) {
-        this.props.setErrorMessage("The name length should between 6 and 60");
+      if (!(this.state.password.length >= 6 && this.state.name.length < 60)) {
+        this.props.setErrorMessage("The password length should between 6 and 60");
         return;
       }
       let data = new FormData();
@@ -109,7 +112,6 @@ class Register extends React.Component {
       console.log("Incomplete");
       this.props.setErrorMessage("Please Complete All of the Required Information");
     }
-    event.preventDefault();
   };
 
   uploadImage = (e) => {

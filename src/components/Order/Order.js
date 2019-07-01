@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -48,7 +48,7 @@ function ComplexGrid(props) {
                 <Typography color="textSecondary">{writer}</Typography>
               </Grid>
               <Grid item>
-                <Typography style={{ cursor: 'pointer' }}>{trader ? "已完成": "未完成"}</Typography>
+                <Typography style={{cursor: 'pointer'}}>{trader ? "已完成" : "未完成"}</Typography>
               </Grid>
             </Grid>
             <Grid item>
