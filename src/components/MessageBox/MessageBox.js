@@ -31,7 +31,7 @@ const style = (theme) => ({
   },
 });
 
-let socket;
+let socket = '';
 
 class FormDialog extends React.Component {
   constructor(props) {
@@ -44,22 +44,13 @@ class FormDialog extends React.Component {
 
   componentDidMount = () => {
     const {profile} = this.props;
-    const {to, user} = this.props;
+    const {to} = this.props;
     if (profile.email) {
       this.props.getUserInfo(profile.email);
       this.props.getUserInfo(to);
-      this.props.getMessageLog('?to=' + to);
-      socket = SocketIOClient('http://127.0.0.1:3000');
-      socket.emit('id', profile.email);
-      socket.on('message', (message) => {
-        message = JSON.parse(message);
-        this.setState({
-          log: Array.from(new Set(this.state.log.concat(message).map(x => JSON.stringify(x)))).map(x => JSON.parse(x))
-        });
-        if (!user[message.sender]) {
-          this.props.getUserInfo(message.sender);
-        }
-      })
+      if (to) {
+        this.props.getMessageLog('?to=' + to);
+      }
     }
   };
 
@@ -73,16 +64,20 @@ class FormDialog extends React.Component {
       })
     }
 
-    if (prevProps.to !== to) {
+    if (prevProps.to !== to && this.props.open === true) {
       this.props.getMessageLog('?to=' + to);
     }
 
-    if (profile.email !== prevProps.profile.email) {
+    if (prevProps.open === false && this.props.open === true) {
 
+      this.props.getMessageLog('?to=' + to);
       socket = SocketIOClient('/');
       socket.emit('id', profile.email);
       socket.on('message', (message) => {
         message = JSON.parse(message);
+        if (message.sender !== to) {
+          return;
+        }
         this.setState({
           log: Array.from(new Set(this.state.log.concat(message).map(x => JSON.stringify(x)))).map(x => JSON.parse(x))
         });
@@ -90,6 +85,12 @@ class FormDialog extends React.Component {
           this.props.getUserInfo(message.sender);
         }
       })
+    }
+
+    if (prevProps.open === true && this.props.open === false) {
+      if (socket) {
+        socket.disconnect();
+      }
     }
   };
 
@@ -106,7 +107,7 @@ class FormDialog extends React.Component {
       let message = {sender: profile.email, receiver: to, message: input, sendDate: new Date()};
       this.setState({
         log: this.state.log.concat(message),
-        input:''
+        input: ''
       });
       socket.emit('message', JSON.stringify(message));
     }

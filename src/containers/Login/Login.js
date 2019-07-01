@@ -25,6 +25,7 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
+    minWidth: '500px'
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -64,6 +65,7 @@ class Login extends React.Component {
 
   handleSubmit = (event) => {
 
+    event.preventDefault();
     if (this.state.password && this.state.email) {
 
       let {email, password} = this.state;
@@ -74,7 +76,6 @@ class Login extends React.Component {
       console.log("Incomplete");
       this.props.setErrorMessage("Please Complete All of the Required Information");
     }
-    event.preventDefault();
   };
 
   render() {

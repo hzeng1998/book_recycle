@@ -13,7 +13,6 @@ import Login from "../Login/Login";
 import Market from "../Market/Market";
 import SellBook from "../SellBook/SellBook";
 import BuyBook from "../BuyBook/BuyBook";
-import DevTools from "../DevTools/DevTools";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Storage from "../PublishOrder/PublishOrder";
 import Trade from "../Trade/Trade";
@@ -65,7 +64,6 @@ class App extends Component {
             </Switch>
           </MuiThemeProvider>
         </Router>
-        <DevTools/>
       </Provider>
     );
   }
